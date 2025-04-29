@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const { tags } = body
+  const { tag } = body
 
   let routines: Routine[] = []
-  const isAll = tags.length === 0 || tags.find((tag: string) => tag === '전체')
+  const isAll = tag === '전체'
   if (isAll) {
     routines = await prisma.routine.findMany({
       // take: 10,
@@ -23,9 +23,7 @@ export async function POST(request: Request) {
   } else {
     routines = await prisma.routine.findMany({
       where: {
-        tag: {
-          in: tags,
-        },
+        tag: tag,
       },
       include: {
         user: {

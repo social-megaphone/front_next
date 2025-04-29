@@ -1,14 +1,21 @@
 import { getBoards } from '@/apis/boardApi'
 import { useBoardStore } from '@/stores/useBoardStore'
-import { useMutation } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-const useBoardMutation = () => {
+export const useBoard = ({ tag }: { tag: string }) => {
   const setPosts = useBoardStore((state) => state.setPosts)
 
-  return useMutation({
-    mutationFn: ({ tags }: { tags: string[] }) => getBoards(tags),
-    onSuccess: (data) => {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['boards', tag],
+    queryFn: () => getBoards(tag),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    enabled: !!tag,
+  })
+
+  useEffect(() => {
+    if (data) {
       const posts = data.routines.map((post: any) => ({
         id: post.id,
         nickname: post.user.nickname,
@@ -19,16 +26,8 @@ const useBoardMutation = () => {
         createdAt: post.createdAt,
       }))
       setPosts(posts)
-    },
-  })
-}
+    }
+  }, [data, setPosts])
 
-export const useBoard = ({ tags }: { tags: string[] }) => {
-  const { mutate: getBoards, isPending } = useBoardMutation()
-
-  useEffect(() => {
-    getBoards({ tags })
-  }, [])
-
-  return { getBoards, isPending }
+  return { getBoards: refetch, isPending: isLoading }
 }

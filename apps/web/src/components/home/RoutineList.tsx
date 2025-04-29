@@ -1,24 +1,25 @@
 'use client'
 
 import { useBoard } from '@/hooks/query/useBoard'
-import { Post, useBoardStore } from '@/stores/useBoardStore'
-import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useBoardStore } from '@/stores/useBoardStore'
+import { useSearchParams } from 'next/navigation'
 import PostCard from '../ui/postcard'
+import { useEffect, useState } from 'react'
 
 export default function RoutineList() {
   const searchParams = useSearchParams()
-  const tags = searchParams.get('tags')
-  // const [tagsArray, setTagsArray] = useState<string[]>(tags ? tags.split(',') : [])
-  useBoard({ tags: [] })
+  const tagParam = searchParams.get('tag')
+  const [tag, setTag] = useState(tagParam ?? '전체')
+
+  useEffect(() => {
+    setTag(tagParam ?? '전체')
+  }, [tagParam])
+
+  useBoard({ tag })
   const { posts } = useBoardStore()
-  console.log(posts)
+
   return (
     <div className="flex flex-col gap-4 p-4 px-8 h-full overflow-y-auto last:mb-16">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
       {posts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
