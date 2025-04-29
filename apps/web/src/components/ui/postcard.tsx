@@ -7,7 +7,7 @@ export function PostCard({ post }: { post: Post }) {
   return (
     <div
       onClick={() => router.push(`/routine/${post.id}`)}
-      className="bg-white rounded-lg p-2 px-4 flex flex-col gap-2 items-center"
+      className="bg-white rounded-lg p-4 px-6 flex flex-col gap-2 items-center"
     >
       <PostCardHeader nickname={post.nickname} tag={post.tag} />
       <PostCardBody imgUrl={post.thumbnail} title={post.title} />
@@ -19,13 +19,13 @@ export function PostCard({ post }: { post: Post }) {
 function PostCardHeader({ nickname, tag }: { nickname: string; tag: string }) {
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center">
-        <span className="text-xl text-gray-500">
+      <div className="flex items-end">
+        <span className="text-2xl text-gray-500">
           <span className="text-haru-brown font-bold">{nickname}님</span>의 잇루틴
         </span>
       </div>
       <div className="flex items-center">
-        <span className="text-sm text-gray-500 px-2 py-1.5 rounded-full bg-haru-brown text-white">{tag}</span>
+        <span className="text-sm text-gray-500 px-2 py-1 rounded-full bg-haru-brown text-white">{tag}</span>
       </div>
     </div>
   )
@@ -33,7 +33,7 @@ function PostCardHeader({ nickname, tag }: { nickname: string; tag: string }) {
 
 function PostCardBody({ imgUrl, title }: { imgUrl: string; title: string }) {
   return (
-    <div className="flex items-center w-full relative aspect-video rounded-xl overflow-hidden">
+    <div className="flex items-center w-full relative aspect-video  rounded-xl overflow-hidden">
       <Image src={imgUrl} alt={title} fill className="object-cover" />
     </div>
   )
