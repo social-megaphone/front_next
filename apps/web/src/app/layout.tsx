@@ -35,9 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={`${fontSans.variable} ${fontMono.variable} h-screen font-sans flex flex-col antialiased`}>
+      <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}>
         <Providers>
-          <div className="flex flex-col flex-1 w-full relative max-w-md mx-auto bg-background-yellow">
+          <div className="flex flex-col h-screen frame w-full relative max-w-md mx-auto bg-background-yellow">
             {children}
           </div>
         </Providers>
