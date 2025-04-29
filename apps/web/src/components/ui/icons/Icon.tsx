@@ -1,4 +1,13 @@
-import { MedalIcon, BookmarkIcon, HomeIcon, UserIcon, PlusIcon, BellIcon, LucideProps } from 'lucide-react'
+import {
+  MedalIcon,
+  BookmarkIcon,
+  HomeIcon,
+  UserIcon,
+  PlusIcon,
+  BellIcon,
+  ArrowLeftIcon,
+  LucideProps,
+} from 'lucide-react'
 
 interface IconProps extends LucideProps {
   name: string
@@ -12,6 +21,7 @@ export default function Icon({ name, ...props }: IconProps) {
     user: <UserIcon {...props} />,
     add: <PlusIcon {...props} />,
     bell: <BellIcon {...props} />,
+    arrowLeft: <ArrowLeftIcon {...props} />,
   }
 
   return iconMap[name as keyof typeof iconMap] || null

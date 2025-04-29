@@ -13,7 +13,7 @@ export default function InitialPage() {
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center h-full text-4xl font-bold">
+    <div className="flex items-center justify-center h-full text-4xl font-bold">
       InitialPage
       {isPending ? <h1 className="mt-12">임시 유저, 토큰 생성중입니다.</h1> : <h1>완료</h1>}
     </div>

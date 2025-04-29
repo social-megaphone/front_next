@@ -3,7 +3,7 @@ import { cn } from '@workspace/ui/lib/utils'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
-const tags = ['전체', '생활습관', '감정돌봄', '대인관계', '작은 습관']
+const tags = ['전체', '생활습관', '감정돌봄', '대인관계', '작은 습관', '작은 습관1', '작은 습관2']
 
 export default function Tags() {
   const searchParams = useSearchParams()
@@ -35,7 +35,7 @@ export default function Tags() {
 
   return (
     <section
-      className="flex items-center w-full justify-center gap-2 pl-10 overflow-x-auto whitespace-nowrap"
+      className="flex items-center w-full justify-start gap-2 pl-6 overflow-x-auto whitespace-nowrap"
       style={{ scrollbarWidth: 'none' }}
     >
       {tags.map((tag) => (

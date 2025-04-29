@@ -17,6 +17,11 @@ export async function POST(request: Request) {
             nickname: true,
           },
         },
+        likes: {
+          select: {
+            id: true,
+          },
+        },
       },
     })
   } else {
@@ -28,6 +33,11 @@ export async function POST(request: Request) {
         user: {
           select: {
             nickname: true,
+          },
+        },
+        likes: {
+          select: {
+            id: true,
           },
         },
       },

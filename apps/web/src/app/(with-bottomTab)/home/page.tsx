@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <main className="h-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
       <TopAlarm />
-      <section className="flex pt-16 pb-4 items-end justify-center pr-4">
+      <section className="flex pt-12 pb-4 items-end pl-10">
         <p className="text-3xl font-bold text-haru-brown mb-3">
           함께하는 <br /> 하루잇러들
         </p>
