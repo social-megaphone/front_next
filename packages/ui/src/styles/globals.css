@@ -132,7 +132,7 @@
     font-size: 14px;
   }
   @supports (-webkit-touch-callout: none) {
-    body{
+    .frame{
       height: -webkit-fill-available !important;
     }
   }
