@@ -34,12 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased bg-background-yellow`}>
+    <html lang="ko" suppressHydrationWarning>
+      <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}>
         <Providers>
-          <div className="flex flex-col flex-1 h-screen w-full relative max-w-xl mx-auto">
+          <div className="flex flex-col flex-1 h-screen w-full relative max-w-md mx-auto bg-background-yellow">
             {children}
-            <BottomTab />
           </div>
         </Providers>
       </body>

@@ -1,15 +1,97 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Prisma 스키마 파일
+// 자세한 내용은 다음 문서를 참조하세요: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+// 사용자 모델
+model User {
+  id           String         @id @default(uuid()) @map("_id")
+  nickname     String
+  createdAt    DateTime       @default(now())
+  profileImage String?
+  goal         String
+  goalDuration Int
+  level        Int            @default(1)
+  streak       Int            @default(0)
+  
+  // 관계 정의
+  routines     Routine[]      // 사용자가 생성한 루틴
+  routineLogs  RoutineLog[]   // 사용자의 루틴 기록
+  likes        Like[]         // 사용자가 좋아요 한 항목
+  comments     Comment[]      // 사용자가 작성한 댓글
+}
+
+model Routine {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  title         String
+  desc          String?
+  thumbnailImg  String?
+  isRecommended Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  tag          String      // 루틴에 연결된 태그 관계
+
+  // 관계 정의
+  user          User          @relation(fields: [userId], references: [id])
+  logs          RoutineLog[]
+  likes         Like[]        // 좋아요 목록
+}
+
+
+// 루틴 수행 기록 모델
+model RoutineLog {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  routineId     String         @db.ObjectId
+  performedAt   DateTime       @default(now())
+  reflection    String?
+  tag          String
+
+  // 관계 정의
+  user          User           @relation(fields: [userId], references: [id])
+  routine       Routine        @relation(fields: [routineId], references: [id])
+  comments      Comment[]      // 이 루틴 로그에 달린 댓글들
+  likes         Like[]         // 이 루틴 로그에 달린 좋아요들
+}
+
+// 댓글 모델
+model Comment {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  logId         String         @db.ObjectId
+  userId        String
+  content       String
+  createdAt     DateTime       @default(now())
+  
+  // 관계 정의
+  log           RoutineLog     @relation(fields: [logId], references: [id])
+  user          User           @relation(fields: [userId], references: [id])
+}
+
+// 좋아요 모델
+model Like {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  createdAt     DateTime       @default(now())
+  
+  // 좋아요 대상 (루틴 또는 루틴 로그)
+  routineId     String?        @db.ObjectId
+  routineLogId  String?        @db.ObjectId
+  
+  // 관계 정의
+  user          User           @relation(fields: [userId], references: [id])
+  routine       Routine?       @relation(fields: [routineId], references: [id])
+  routineLog    RoutineLog?    @relation(fields: [routineLogId], references: [id])
+  
+  // 유효성 검사: 루틴 또는 루틴 로그 중 하나만 참조해야 함
+  //  @@check(routineId != null || routineLogId != null)
+  // 한 사용자는 각 대상에 좋아요를 한 번만 할 수 있음
+  @@unique([userId, routineId])
+  @@unique([userId, routineLogId])
 }
