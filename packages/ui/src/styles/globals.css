@@ -1,13 +1,14 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../../../apps/**/*.{ts,tsx}";
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --main-yellow: #fff2cd;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -76,10 +77,15 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --bottom-tab-brown: #8c7154;
 }
 
 @theme inline {
+  --color-background-yellow: #fff7dc;
+  --color-haru-brown: #7a634b;
   --color-background: var(--background);
+  --color-tab-brown: var(--bottom-tab-brown);
+  --color-main-yellow: var(--main-yellow);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
