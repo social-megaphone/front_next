@@ -19,7 +19,7 @@ export default function RoutineList() {
   const { posts } = useBoardStore()
 
   return (
-    <div className="flex flex-col gap-4 p-4 px-8 h-full overflow-y-auto last:mb-16">
+    <div className="flex flex-col gap-4 p-4 px-8 flex-1 last:mb-20">
       {posts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
