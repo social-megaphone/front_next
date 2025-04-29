@@ -20,7 +20,7 @@ function PostCardHeader({ nickname, tag }: { nickname: string; tag: string }) {
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-end">
-        <span className="text-2xl text-gray-500">
+        <span className="text-xl text-gray-500">
           <span className="text-haru-brown font-bold">{nickname}님</span>의 잇루틴
         </span>
       </div>
