@@ -2,6 +2,7 @@ import RoutineList from '@/components/home/RoutineList'
 import Tags from '@/components/home/Tags'
 import TopAlarm from '@/components/layout/topBar/TopAlarm'
 import Image from 'next/image'
+import { Suspense } from 'react'
 
 export default function HomePage() {
   return (
@@ -14,8 +15,10 @@ export default function HomePage() {
         <Image src="/haru_smile.png" alt="haru" width={132} height={132} />
       </section>
 
-      <Tags />
-      <RoutineList />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Tags />
+        <RoutineList />
+      </Suspense>
     </main>
   )
 }
