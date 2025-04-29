@@ -133,7 +133,7 @@
   }
   @supports (-webkit-touch-callout: none) {
     body{
-      height: -webkit-fill-available;
+      height: -webkit-fill-available !important;
     }
   }
 }
