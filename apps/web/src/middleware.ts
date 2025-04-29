@@ -7,9 +7,6 @@ export default function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.includes('/initial')) {
     return NextResponse.next()
   }
-  if (request.nextUrl.pathname.includes('/home')) {
-    return NextResponse.next()
-  }
   if (request.nextUrl.pathname.includes('/api/')) {
     return NextResponse.next()
   }
