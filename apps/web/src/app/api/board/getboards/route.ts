@@ -1,12 +1,11 @@
 import prisma from '@/lib/prisma'
-import { Routine } from '@prisma/client'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const body = await request.json()
   const { tag } = body
 
-  let routines: Routine[] = []
+  let routines = []
   const isAll = tag === '전체'
   if (isAll) {
     routines = await prisma.routine.findMany({
