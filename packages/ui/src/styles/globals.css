@@ -129,8 +129,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    min-height: 100vh;
-    min-height: -webkit-fill-available; 
     font-size: 14px;
   }
 }
