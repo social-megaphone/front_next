@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "build:ignore-lint": "next build --no-lint",
     "start": "next start",
     "seed": "node prisma/seed.js",
