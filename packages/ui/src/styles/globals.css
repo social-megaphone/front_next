@@ -131,4 +131,9 @@
     @apply bg-background text-foreground;
     font-size: 14px;
   }
+  @supports (-webkit-touch-callout: none) {
+    body{
+      height: -webkit-fill-available;
+    }
+  }
 }
