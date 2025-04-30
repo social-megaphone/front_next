@@ -29,5 +29,5 @@ export const useBoard = ({ tag }: { tag: string }) => {
     }
   }, [data, setPosts])
 
-  return { getBoards: refetch, isPending: isLoading }
+  return { isPending: isLoading }
 }
