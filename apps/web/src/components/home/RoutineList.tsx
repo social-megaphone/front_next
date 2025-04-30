@@ -20,9 +20,15 @@ export default function RoutineList() {
 
   return (
     <div className="flex flex-col gap-6 py-4 px-6 flex-1 last:mb-20">
-      {isPending
-        ? Array.from({ length: 3 }).map((_, index) => <PostCardSkeleton key={index} />)
-        : posts.map((post) => <PostCard key={post.id} post={post} />)}
+      {isPending ? (
+        Array.from({ length: 3 }).map((_, index) => <PostCardSkeleton key={index} />)
+      ) : posts.length > 0 ? (
+        posts.map((post) => <PostCard key={post.id} post={post} />)
+      ) : (
+        <div className="flex flex-col gap-4 p-4 flex-1 last:mb-20">
+          <p className="text-center text-gray-500 text-lg">등록된 잇루틴이 없습니다.</p>
+        </div>
+      )}
     </div>
   )
 }
