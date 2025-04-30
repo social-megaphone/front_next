@@ -3,9 +3,9 @@
 import { useBoard } from '@/hooks/query/useBoard'
 import { useBoardStore } from '@/stores/useBoardStore'
 import { useSearchParams } from 'next/navigation'
-import PostCard from '../ui/postcard'
 import { useEffect, useState } from 'react'
-
+import PostCard from '../ui/PostCard'
+import { PostCardSkeleton } from '../ui/PostCard/Skeleton'
 export default function RoutineList() {
   const searchParams = useSearchParams()
   const tagParam = searchParams.get('tag')
@@ -15,13 +15,14 @@ export default function RoutineList() {
     setTag(tagParam ?? '전체')
   }, [tagParam])
 
-  useBoard({ tag })
+  const { isPending } = useBoard({ tag })
   const { posts } = useBoardStore()
 
   return (
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+    <div className="flex flex-col gap-6 py-4 px-6 flex-1 last:mb-20">
+      {isPending
+        ? Array.from({ length: 3 }).map((_, index) => <PostCardSkeleton key={index} />)
+        : posts.map((post) => <PostCard key={post.id} post={post} />)}
     </div>
   )
 }
