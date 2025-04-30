@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import PostCard from '../ui/PostCard'
 import { PostCardSkeleton } from '../ui/PostCard/Skeleton'
+
 export default function RoutineList() {
   const searchParams = useSearchParams()
   const tagParam = searchParams.get('tag')

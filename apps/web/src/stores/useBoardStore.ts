@@ -5,18 +5,24 @@ export type Post = {
   nickname: string
   title: string
   desc: string
-  // didILike: boolean
   thumbnail: string
   tag: string
   createdAt: string
+  liked?: boolean
+  bookmarked?: boolean
 }
 
 interface BoardStore {
   posts: Post[]
   setPosts: (posts: Post[]) => void
+  updatePostStatus: (id: string, status: { liked?: boolean; bookmarked?: boolean }) => void
 }
 
 export const useBoardStore = create<BoardStore>((set) => ({
   posts: [],
   setPosts: (posts: Post[]) => set({ posts }),
+  updatePostStatus: (id: string, status: { liked?: boolean; bookmarked?: boolean }) =>
+    set((state) => ({
+      posts: state.posts.map((post) => (post.id === id ? { ...post, ...status } : post)),
+    })),
 }))

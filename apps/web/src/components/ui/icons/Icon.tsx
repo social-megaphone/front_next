@@ -6,6 +6,8 @@ import {
   PlusIcon,
   BellIcon,
   ArrowLeftIcon,
+  HeartIcon,
+  XIcon,
   LucideProps,
 } from 'lucide-react'
 
@@ -22,6 +24,8 @@ export default function Icon({ name, ...props }: IconProps) {
     add: <PlusIcon {...props} />,
     bell: <BellIcon {...props} />,
     arrowLeft: <ArrowLeftIcon {...props} />,
+    heart: <HeartIcon {...props} />,
+    x: <XIcon {...props} />,
   }
 
   return iconMap[name as keyof typeof iconMap] || null

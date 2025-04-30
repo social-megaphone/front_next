@@ -25,6 +25,7 @@ model User {
   routines     Routine[]      // 사용자가 생성한 루틴
   routineLogs  RoutineLog[]   // 사용자의 루틴 기록
   likes        Like[]         // 사용자가 좋아요 한 항목
+  bookmarks    Bookmark[]     // 사용자가 북마크한 항목
   comments     Comment[]      // 사용자가 작성한 댓글
 }
 
@@ -36,12 +37,13 @@ model Routine {
   thumbnailImg  String?
   isRecommended Boolean       @default(false)
   createdAt     DateTime      @default(now())
-  tag          String      // 루틴에 연결된 태그 관계
+  tag           String        // 루틴에 연결된 태그 관계
 
   // 관계 정의
   user          User          @relation(fields: [userId], references: [id])
   logs          RoutineLog[]
   likes         Like[]        // 좋아요 목록
+  bookmarks     Bookmark[]    // 북마크 목록
 }
 
 
@@ -52,7 +54,7 @@ model RoutineLog {
   routineId     String         @db.ObjectId
   performedAt   DateTime       @default(now())
   reflection    String?
-  tag          String
+  tag           String
 
   // 관계 정의
   user          User           @relation(fields: [userId], references: [id])
@@ -89,9 +91,22 @@ model Like {
   routine       Routine?       @relation(fields: [routineId], references: [id])
   routineLog    RoutineLog?    @relation(fields: [routineLogId], references: [id])
   
-  // 유효성 검사: 루틴 또는 루틴 로그 중 하나만 참조해야 함
-  //  @@check(routineId != null || routineLogId != null)
   // 한 사용자는 각 대상에 좋아요를 한 번만 할 수 있음
   @@unique([userId, routineId])
   @@unique([userId, routineLogId])
+}
+
+// 북마크 모델 추가
+model Bookmark {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  routineId     String         @db.ObjectId
+  createdAt     DateTime       @default(now())
+  
+  // 관계 정의
+  user          User           @relation(fields: [userId], references: [id])
+  routine       Routine        @relation(fields: [routineId], references: [id])
+  
+  // 한 사용자는 각 루틴을 한 번만 북마크할 수 있음
+  @@unique([userId, routineId])
 }

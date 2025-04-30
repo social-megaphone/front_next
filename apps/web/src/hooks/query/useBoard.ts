@@ -1,6 +1,6 @@
 import { getBoards } from '@/apis/boardApi'
 import { useBoardStore } from '@/stores/useBoardStore'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 export const useBoard = ({ tag }: { tag: string }) => {
@@ -18,16 +18,18 @@ export const useBoard = ({ tag }: { tag: string }) => {
     if (data) {
       const posts = data.routines.map((post: any) => ({
         id: post.id,
-        nickname: post.user.nickname,
+        nickname: post.nickname,
         title: post.title,
         desc: post.desc,
         thumbnail: post.thumbnailImg,
         tag: post.tag,
         createdAt: post.createdAt,
+        liked: post.liked,
+        bookmarked: post.bookmarked,
       }))
       setPosts(posts)
     }
   }, [data, setPosts])
 
-  return { isPending: isLoading }
+  return { isPending: isLoading, refetch }
 }
