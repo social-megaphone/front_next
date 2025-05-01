@@ -9,15 +9,17 @@ export const useToggleBookmark = () => {
   const { routineLogs, setRoutineLogs } = useRoutineLogStore()
   return useMutation({
     mutationFn: toggleBookmark,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
-      queryClient.invalidateQueries({ queryKey: ['routine-status'] })
-      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
+    onMutate(variables) {
       setRoutineLogs(
         routineLogs.map((routineLog) =>
           routineLog.id === variables ? { ...routineLog, bookmarked: !routineLog.bookmarked } : routineLog,
         ),
       )
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
+      queryClient.invalidateQueries({ queryKey: ['routine-status'] })
+      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
     },
   })
 }

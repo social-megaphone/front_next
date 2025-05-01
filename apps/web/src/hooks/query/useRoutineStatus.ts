@@ -10,9 +10,7 @@ export const useToggleLike = () => {
 
   return useMutation({
     mutationFn: toggleLike,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['routineLog-status'] })
-      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
+    onMutate(variables) {
       setRoutineLogs(
         routineLogs.map((routineLog) =>
           routineLog.id === variables ? { ...routineLog, liked: !routineLog.liked } : routineLog,
@@ -21,6 +19,10 @@ export const useToggleLike = () => {
       setBookmarks(
         bookmarks.map((bookmark) => (bookmark.id === variables ? { ...bookmark, liked: !bookmark.liked } : bookmark)),
       )
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['routineLog-status'] })
+      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
     },
   })
 }
