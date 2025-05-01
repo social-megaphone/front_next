@@ -5,3 +5,8 @@ export const postInitial = async ({ goalDuration, goal }: InitialAuthRequest): P
   const response = await axiosInstance.post<InitialAuthResponse>('/auth/initial', { goalDuration, goal })
   return response.data
 }
+export const getMyProfile = async () => {
+  const { data } = await axiosInstance.get('/auth/mypage')
+  console.log(data)
+  return data
+}

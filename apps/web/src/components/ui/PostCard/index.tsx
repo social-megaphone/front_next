@@ -51,7 +51,7 @@ function PostCardHeader({ nickname, tag }: { nickname: string; tag: string }) {
         </span>
       </div>
       <div className="flex items-center">
-        <span className="text-sm text-gray-500 px-2 py-1 rounded-full bg-haru-brown text-white">{tag}</span>
+        <span className="text-sm px-2 py-1 rounded-full bg-haru-brown text-white">{tag}</span>
       </div>
     </div>
   )
