@@ -39,6 +39,8 @@ export const useRoutineLogDetail = ({ id }: { id: string }) => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['routineLogDetail', id],
     queryFn: () => getRoutineLogDetail(id),
+    staleTime: 0,
+    gcTime: 0,
   })
 
   useEffect(() => {

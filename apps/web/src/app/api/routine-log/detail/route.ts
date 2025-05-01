@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
     desc: routineLog?.routine.desc,
     logImg: routineLog?.logImg,
     tag: routineLog?.routine.tag,
+    reflection: routineLog?.reflection,
     performedAt: routineLog?.performedAt,
     nickname: routineLog?.user.nickname,
     userId: routineLog?.user.id,
