@@ -24,12 +24,16 @@ export const useRoutineLogs = ({ tag }: { tag: string }) => {
 }
 
 interface RoutineLogDetail extends RoutineLogType {
-  userId: string
   routineId: string
   likeCount: number
   commentCount: number
   isLiked: boolean
   isBookmarked: boolean
+  user: {
+    userId: string
+    profileImage: string
+    nickname: string
+  }
   //comment 속성 정의해야함
   comments: any[]
 }
@@ -49,5 +53,5 @@ export const useRoutineLogDetail = ({ id }: { id: string }) => {
     }
   }, [data])
 
-  return { routineLogDetail, isPending: isLoading, refetch }
+  return { routineLogDetail, setRoutineLogDetail, isPending: isLoading, refetch }
 }

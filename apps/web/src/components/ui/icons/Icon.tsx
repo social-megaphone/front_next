@@ -9,6 +9,7 @@ import {
   HeartIcon,
   XIcon,
   LucideProps,
+  ChevronLeftIcon,
 } from 'lucide-react'
 
 interface IconProps extends LucideProps {
@@ -23,7 +24,7 @@ export default function Icon({ name, ...props }: IconProps) {
     user: <UserIcon {...props} />,
     add: <PlusIcon {...props} />,
     bell: <BellIcon {...props} />,
-    arrowLeft: <ArrowLeftIcon {...props} />,
+    chevronLeft: <ChevronLeftIcon {...props} />,
     heart: <HeartIcon {...props} />,
     x: <XIcon {...props} />,
   }

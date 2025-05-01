@@ -25,8 +25,7 @@ export function PostCard({ post }: { post: RoutineLogType }) {
       onClick={() => router.push(`/routine/${post.id}`)}
       className="bg-white rounded-lg p-4 px-6 flex flex-col gap-2 items-center relative"
       initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
       <PostCardHeader nickname={post.nickname} tag={post.tag} />

@@ -12,6 +12,7 @@ async function main() {
   await prisma.routineLog.deleteMany({})
   await prisma.routine.deleteMany({})
   await prisma.tag.deleteMany({})
+  await prisma.user.deleteMany({})
 
   console.log('All existing data deleted.')
 
@@ -59,7 +60,7 @@ async function main() {
         goalDuration: 30,
         level: 1,
         streak: 0,
-        profileImage: 'https://withus3bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png',
+        profileImage: '/default-user.avif',
       },
     })
   }
@@ -75,7 +76,7 @@ async function main() {
       goalDuration: 21,
       level: 2,
       streak: 5,
-      profileImage: 'https://withus3bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png',
+      profileImage: '/default-user.avif',
     },
   })
 
@@ -89,7 +90,7 @@ async function main() {
       goalDuration: 14,
       level: 3,
       streak: 12,
-      profileImage: 'https://withus3bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png',
+      profileImage: '/default-user.avif',
     },
   })
 
