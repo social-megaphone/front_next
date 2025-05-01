@@ -30,6 +30,7 @@ export default function BookmarkPage() {
                 title: bookmark.title,
                 desc: bookmark.desc,
                 logImg: bookmark.logImg,
+                reflection: bookmark.reflection,
                 tag: bookmark.tag,
                 performedAt: bookmark.performedAt,
                 bookmarked: bookmark.isBookmarked,
