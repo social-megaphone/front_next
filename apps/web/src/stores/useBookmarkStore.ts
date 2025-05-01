@@ -5,10 +5,13 @@ export type BookmarkedPost = {
   nickname: string
   title: string
   desc: string
-  thumbnail: string
+  logImg: string
   tag: string
-  createdAt: string
+  performedAt: string
   bookmarkId: string
+  isBookmarked: boolean
+  reflection: string
+  liked: boolean
 }
 
 interface BookmarkStore {

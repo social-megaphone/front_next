@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUserIdFromToken } from '@/services/token.service'
 
 export async function GET(request: NextRequest) {
-  const routineId = request.nextUrl.searchParams.get('routineId')
+  const routineLogId = request.nextUrl.searchParams.get('routineLogId')
 
-  if (!routineId) {
+  if (!routineLogId) {
     return NextResponse.json({ message: 'Routine ID is required' }, { status: 400 })
   }
 
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const like = await prisma.like.findFirst({
       where: {
         userId,
-        routineId,
+        routineLogId,
       },
     })
 
@@ -32,14 +32,14 @@ export async function GET(request: NextRequest) {
     const bookmark = await prisma.bookmark.findFirst({
       where: {
         userId,
-        routineId,
+        routineLogId,
       },
     })
 
     // 좋아요 수 카운트
     const likeCount = await prisma.like.count({
       where: {
-        routineId,
+        routineLogId,
       },
     })
 

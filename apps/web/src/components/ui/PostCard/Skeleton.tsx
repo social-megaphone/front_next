@@ -2,7 +2,7 @@ import { Skeleton } from '@workspace/ui/components/skeleton'
 
 export function PostCardSkeleton() {
   return (
-    <div className="bg-white rounded-lg p-4 px-6 flex flex-col gap-2 items-center">
+    <div className="bg-white rounded-lg p-4 animate-[pulse_1s_ease-in-out_infinite] px-6 flex flex-col gap-2 items-center">
       <div className="flex items-center justify-between w-full">
         <div className="flex items-end">
           <Skeleton className="h-6 w-40" />

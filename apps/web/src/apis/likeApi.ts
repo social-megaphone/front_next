@@ -1,11 +1,11 @@
 import { axiosInstance } from './axiosInstance'
 
-export const toggleLike = async (routineId: string) => {
-  const response = await axiosInstance.post('/like', { routineId })
+export const toggleLike = async (routineLogId: string) => {
+  const response = await axiosInstance.post('/like', { routineLogId })
   return response.data
 }
 
-export const getRoutineStatus = async (routineId: string) => {
-  const response = await axiosInstance.get(`/routine-status?routineId=${routineId}`)
+export const getRoutineStatus = async (routineLogId: string) => {
+  const response = await axiosInstance.get(`/routine-status?routineLogId=${routineLogId}`)
   return response.data
 }

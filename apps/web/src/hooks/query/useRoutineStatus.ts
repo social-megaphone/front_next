@@ -1,41 +1,49 @@
-import { getRoutineStatus, toggleLike } from '@/apis'
-import { useBoardStore } from '@/stores/useBoardStore'
-import { useRoutineStatusStore } from '@/stores/useRoutineStatusStore'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { toggleLike } from '@/apis'
+import { useBookmarkStore } from '@/stores/useBookmarkStore'
+import { useRoutineLogStore } from '@/stores/useRoutineLogStore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const useToggleLike = () => {
   const queryClient = useQueryClient()
-  const { posts, setPosts } = useBoardStore()
+  const { routineLogs, setRoutineLogs } = useRoutineLogStore()
+  const { bookmarks, setBookmarks } = useBookmarkStore()
+
   return useMutation({
     mutationFn: toggleLike,
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['routine-status'] })
-      queryClient.invalidateQueries({ queryKey: ['boards'] })
-      setPosts(posts.map((post) => (post.id === variables ? { ...post, liked: !post.liked } : post)))
+      queryClient.invalidateQueries({ queryKey: ['routineLog-status'] })
+      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
+      setRoutineLogs(
+        routineLogs.map((routineLog) =>
+          routineLog.id === variables ? { ...routineLog, liked: !routineLog.liked } : routineLog,
+        ),
+      )
+      setBookmarks(
+        bookmarks.map((bookmark) => (bookmark.id === variables ? { ...bookmark, liked: !bookmark.liked } : bookmark)),
+      )
     },
   })
 }
 
-export const useRoutineStatus = (routineId: string) => {
-  const setRoutineStatus = useRoutineStatusStore((state) => state.setRoutineStatus)
+// export const useRoutineStatus = (routineLogId: string) => {
+//   const setRoutineStatus = useRoutineStatusStore((state) => state.setRoutineStatus)
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['routine-status', routineId],
-    queryFn: () => getRoutineStatus(routineId),
-    enabled: !!routineId,
-    staleTime: 5 * 60 * 1000,
-  })
+//   const { data, isLoading } = useQuery({
+//     queryKey: ['routineLog-status', routineLogId],
+//     queryFn: () => getRoutineStatus(routineLogId),
+//     enabled: !!routineLogId,
+//     staleTime: 5 * 60 * 1000,
+//   })
 
-  useEffect(() => {
-    if (data) {
-      setRoutineStatus({
-        isLiked: data.isLiked,
-        isBookmarked: data.isBookmarked,
-        likeCount: data.likeCount,
-      })
-    }
-  }, [data, setRoutineStatus])
+//   useEffect(() => {
+//     if (data) {
+//       setRoutineStatus({
+//         isLiked: data.isLiked,
+//         isBookmarked: data.isBookmarked,
+//         likeCount: data.likeCount,
+//       })
+//     }
+//   }, [data, setRoutineStatus])
 
-  return { isPending: isLoading }
-}
+//   return { isPending: isLoading }
+// }

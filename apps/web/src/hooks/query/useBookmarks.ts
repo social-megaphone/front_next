@@ -1,19 +1,23 @@
 import { getBookmarks, toggleBookmark } from '@/apis'
-import { useBoardStore } from '@/stores/useBoardStore'
 import { useBookmarkStore } from '@/stores/useBookmarkStore'
+import { useRoutineLogStore } from '@/stores/useRoutineLogStore'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 export const useToggleBookmark = () => {
   const queryClient = useQueryClient()
-  const { posts, setPosts } = useBoardStore()
+  const { routineLogs, setRoutineLogs } = useRoutineLogStore()
   return useMutation({
     mutationFn: toggleBookmark,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
-      queryClient.invalidateQueries({ queryKey: ['boards'] })
       queryClient.invalidateQueries({ queryKey: ['routine-status'] })
-      setPosts(posts.map((post) => (post.id === variables ? { ...post, bookmarked: !post.bookmarked } : post)))
+      queryClient.invalidateQueries({ queryKey: ['routineLogs'] })
+      setRoutineLogs(
+        routineLogs.map((routineLog) =>
+          routineLog.id === variables ? { ...routineLog, bookmarked: !routineLog.bookmarked } : routineLog,
+        ),
+      )
     },
   })
 }

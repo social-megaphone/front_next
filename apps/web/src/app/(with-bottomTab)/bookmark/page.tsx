@@ -29,10 +29,11 @@ export default function BookmarkPage() {
                 nickname: bookmark.nickname,
                 title: bookmark.title,
                 desc: bookmark.desc,
-                thumbnail: bookmark.thumbnail,
+                logImg: bookmark.logImg,
                 tag: bookmark.tag,
-                createdAt: bookmark.createdAt,
-                bookmarked: true,
+                performedAt: bookmark.performedAt,
+                bookmarked: bookmark.isBookmarked,
+                liked: bookmark.liked,
               }}
             />
           ))

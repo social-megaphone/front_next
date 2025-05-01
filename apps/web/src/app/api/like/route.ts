@@ -12,13 +12,13 @@ export async function POST(request: NextRequest) {
   }
 
   const userId = await getUserIdFromToken({ token: jwt_token.value })
-  const { routineId } = await request.json()
+  const { routineLogId } = await request.json()
 
   try {
     const existingLike = await prisma.like.findFirst({
       where: {
         userId,
-        routineId,
+        routineLogId,
       },
     })
 
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       await prisma.like.create({
         data: {
           userId,
-          routineId,
+          routineLogId,
         },
       })
       return NextResponse.json({ message: 'Like created', liked: true })

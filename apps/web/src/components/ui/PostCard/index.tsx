@@ -1,11 +1,12 @@
-import { Post } from '@/stores/useBoardStore'
 import { useToggleLike } from '@/hooks/query/useRoutineStatus'
 import { useToggleBookmark } from '@/hooks/query/useBookmarks'
 import { HeartIcon, BookmarkIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { RoutineLogType } from '@/stores/useRoutineLogStore'
+import { motion } from 'framer-motion'
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({ post }: { post: RoutineLogType }) {
   const router = useRouter()
   const { mutate: toggleLike } = useToggleLike()
   const { mutate: toggleBookmark } = useToggleBookmark()
@@ -20,21 +21,25 @@ export function PostCard({ post }: { post: Post }) {
   }
 
   return (
-    <div
+    <motion.div
       onClick={() => router.push(`/routine/${post.id}`)}
       className="bg-white rounded-lg p-4 px-6 flex flex-col gap-2 items-center relative"
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
     >
       <PostCardHeader nickname={post.nickname} tag={post.tag} />
-      <PostCardBody imgUrl={post.thumbnail} title={post.title} />
+      <PostCardBody imgUrl={post.logImg} title={post.title} />
       <PostCardFooter
         title={post.title}
-        desc={post.desc}
+        reflection={post.reflection}
         liked={post.liked || false}
         bookmarked={post.bookmarked || false}
         handleLike={handleLike}
         handleBookmark={handleBookmark}
       />
-    </div>
+    </motion.div>
   )
 }
 
@@ -63,14 +68,14 @@ function PostCardBody({ imgUrl, title }: { imgUrl: string; title: string }) {
 
 function PostCardFooter({
   title,
-  desc,
+  reflection,
   liked,
   bookmarked,
   handleLike,
   handleBookmark,
 }: {
   title: string
-  desc: string
+  reflection: string
   liked: boolean
   bookmarked: boolean
   handleLike: (e: React.MouseEvent) => void
@@ -89,7 +94,7 @@ function PostCardFooter({
           </button>
         </span>
       </span>
-      <p className="text-sm text-gray-500">{desc}</p>
+      <p className="text-sm border-gray-200 text-gray-500">{reflection}</p>
     </div>
   )
 }

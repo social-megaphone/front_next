@@ -12,14 +12,14 @@ export async function POST(request: NextRequest) {
   }
 
   const userId = await getUserIdFromToken({ token: jwt_token.value })
-  const { routineId } = await request.json()
+  const { routineLogId } = await request.json()
 
   try {
     // 기존 북마크 확인
     const existingBookmark = await prisma.bookmark.findFirst({
       where: {
         userId,
-        routineId,
+        routineLogId,
       },
     })
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       await prisma.bookmark.create({
         data: {
           userId,
-          routineId,
+          routineLogId,
         },
       })
       return NextResponse.json({ message: 'Bookmark created', bookmarked: true })
@@ -63,11 +63,24 @@ export async function GET(request: NextRequest) {
         userId,
       },
       include: {
-        routine: {
+        routineLog: {
           include: {
             user: {
               select: {
                 nickname: true,
+              },
+            },
+            routine: {
+              select: {
+                title: true,
+                desc: true,
+                tag: true,
+              },
+            },
+            likes: {
+              select: {
+                id: true,
+                userId: true,
               },
             },
           },
@@ -78,16 +91,24 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    const formattedBookmarks = bookmarks.map((bookmark) => ({
-      id: bookmark.routine.id,
-      nickname: bookmark.routine.user.nickname,
-      title: bookmark.routine.title,
-      desc: bookmark.routine.desc || '',
-      thumbnail: bookmark.routine.thumbnailImg || '',
-      tag: bookmark.routine.tag,
-      createdAt: bookmark.routine.createdAt,
-      bookmarkId: bookmark.id,
-    }))
+    const formattedBookmarks = bookmarks.map((bookmark) => {
+      const isLiked = bookmark.routineLog.likes.some((like) => like.userId === userId)
+
+      return {
+        id: bookmark.routineLog.id,
+        nickname: bookmark.routineLog.user.nickname,
+        title: bookmark.routineLog.routine.title,
+        desc: bookmark.routineLog.routine.desc || '',
+        logImg: bookmark.routineLog.logImg || '/noImg.png',
+        tag: bookmark.routineLog.routine.tag,
+        performedAt: bookmark.routineLog.performedAt,
+        bookmarkId: bookmark.id,
+        isBookmarked: true,
+        liked: isLiked,
+        reflection: bookmark.routineLog.reflection,
+        likeCount: bookmark.routineLog.likes.length,
+      }
+    })
 
     return NextResponse.json({ bookmarks: formattedBookmarks })
   } catch (error) {
