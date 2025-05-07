@@ -3,24 +3,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-const name = ['거북이', '참새', '물개', '고양이', '강아지', '소라게', '문어', '뱀', '토끼', '호랑이', '사자']
-const head = ['활발한', '따뜻한', '유쾌한', '친절한', '깔끔한', '예쁜', '귀여운', '깜찍한', '깔끔한']
-
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { goalDuration, goal } = body
-
-  const randomNickname = `${head[Math.floor(Math.random() * head.length)]} ${name[Math.floor(Math.random() * name.length)]} `
+  const { goalDuration, goal, nickname, profileImage } = body
 
   const user = await prisma.user.create({
     data: {
-      nickname: randomNickname,
-      profileImage: '/images/default-user.avif',
+      nickname: nickname,
+      profileImage: profileImage || '/default-user.avif',
       goalDuration: goalDuration || 30,
       goal: goal || '취업',
     },
   })
 
+  // 아이디만 넣자~
   const JWT_TOKEN = await jwt.sign(
     {
       id: user.id,

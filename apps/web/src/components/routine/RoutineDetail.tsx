@@ -43,14 +43,6 @@ function RoutineDetailPage({ id }: { id: string }) {
           </div>
           <Skeleton className="h-20 w-full mt-2" />
         </div>
-        <div className="mt-6">
-          <Skeleton className="h-8 w-32 mb-4" />
-          <div className="space-y-3">
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-          </div>
-        </div>
       </div>
     )
   }
