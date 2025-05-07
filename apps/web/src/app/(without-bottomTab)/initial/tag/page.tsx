@@ -33,7 +33,7 @@ export default function TagPage() {
   return (
     <>
       <div className="flex-1 w-full flex flex-col items-center justify-center -space-y-8">
-        <UnoptimizedImage src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
+        <UnoptimizedImage src="/haru.png" alt="initial" width={180} height={180} className="z-10" />
         <Card_Haru
           text={
             <span className="font-bold">

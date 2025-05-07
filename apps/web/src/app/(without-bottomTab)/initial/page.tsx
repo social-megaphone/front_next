@@ -35,7 +35,7 @@ export default function InitialPage() {
     <>
       {/* {isPending ? <h1 className="mt-12">임시 유저, 토큰 생성중입니다.</h1> : <h1>완료</h1>} */}
       <div className="flex-1 w-full flex flex-col items-center justify-center -space-y-8">
-        <UnoptimizedImage src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
+        <UnoptimizedImage src="/haru.png" alt="initial" width={180} height={180} className="z-10" />
         <Card_Haru
           text={
             <p className="font-bold">
@@ -48,9 +48,9 @@ export default function InitialPage() {
           }
         />
         <div className="w-80 aspect-square relative mt-8">
-          <UnoptimizedImage src="/images/haru_note.png" alt="haru_note" fill className="object-contain" />
+          <UnoptimizedImage src="/haru_note.png" alt="haru_note" fill className="object-contain" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
-            <UnoptimizedImage src="/images/haru_user.png" alt="haru_user" width={80} height={80} />
+            <UnoptimizedImage src="/haru_user.png" alt="haru_user" width={80} height={80} />
             <p className="text-xl text-haru-brown font-medium py-1">{nickname}</p>
             <Button variant="outline" onClick={handleRandomNickname}>
               랜덤 닉네임 생성

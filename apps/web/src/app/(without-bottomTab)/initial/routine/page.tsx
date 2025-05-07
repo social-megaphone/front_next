@@ -32,7 +32,7 @@ export default function RoutinePage() {
   return (
     <div className="flex-1 w-full flex flex-col items-center">
       <div className="flex flex-col w-full shrink-0 items-center justify-center -space-y-8">
-        <UnoptimizedImage src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
+        <UnoptimizedImage src="/haru.png" alt="initial" width={180} height={180} className="z-10" />
         <Card_Haru
           text={
             <span>

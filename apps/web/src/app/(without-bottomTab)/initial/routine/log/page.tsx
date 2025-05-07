@@ -51,7 +51,7 @@ export default function RoutineLogPage() {
         <div className="flex items-center justify-start w-full pb-10">
           <h1 className="text-3xl font-bold text-haru-brown whitespace-pre-line">{LOG_TITLE}</h1>
           <UnoptimizedImage
-            src="/images/haru.png"
+            src="/haru.png"
             className="absolute top-6 -right-4"
             alt="initial"
             width={150}

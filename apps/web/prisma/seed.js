@@ -1,4 +1,3 @@
-// prisma/seed.ts
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -24,7 +23,7 @@ async function main() {
       nickname: '유쾌한 토끼',
       level: 1,
       streak: 0,
-      profileImage: '/images/haru_user.png',
+      profileImage: '/haru_user.png',
     },
   })
 
@@ -37,7 +36,7 @@ async function main() {
       nickname: '따뜻한 고양이',
       level: 2,
       streak: 5,
-      profileImage: '/images/haru_user.png',
+      profileImage: '/haru_user.png',
     },
   })
 
@@ -49,7 +48,7 @@ async function main() {
       nickname: '활발한 강아지',
       level: 3,
       streak: 12,
-      profileImage: '/images/haru_user.png',
+      profileImage: '/haru_user.png',
     },
   })
 

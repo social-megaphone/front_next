@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   const user = await prisma.user.create({
     data: {
       nickname: nickname,
-      profileImage: '/images/haru_user.png',
+      profileImage: '/haru_user.png',
       routines: {
         connect: {
           id: routine.id,
