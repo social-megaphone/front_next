@@ -4,15 +4,30 @@ import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
 export async function POST(request: NextRequest) {
+  // 처음엔 전부 받은 다음에 로그에 저장 + 사용자 등록을 동시에 해야할듯?
   const body = await request.json()
-  const { goalDuration, goal, nickname, profileImage } = body
+  const { nickname, goalDate, routine, reflection, imgSrc } = body
 
   const user = await prisma.user.create({
     data: {
       nickname: nickname,
-      profileImage: profileImage || '/default-user.avif',
-      goalDuration: goalDuration || 30,
-      goal: goal || '취업',
+      profileImage: '/images/haru_user.png',
+      routines: {
+        connect: {
+          id: routine.id,
+        },
+      },
+    },
+  })
+
+  // 루틴 로그 생성
+  await prisma.routineLog.create({
+    data: {
+      routineId: routine.id,
+      userId: user.id,
+      logImg: imgSrc,
+      reflection: reflection,
+      performedAt: new Date(),
     },
   })
 

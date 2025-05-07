@@ -5,7 +5,6 @@ import {
   UserIcon,
   PlusIcon,
   BellIcon,
-  ArrowLeftIcon,
   HeartIcon,
   XIcon,
   LucideProps,

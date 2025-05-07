@@ -1,9 +1,8 @@
 'use client'
+import { TAGS } from '@/constants'
 import { cn } from '@workspace/ui/lib/utils'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-
-const tags = ['전체', '생활습관', '감정돌봄', '대인관계', '작은 습관', '작은 습관1', '작은 습관2']
 
 export default function Tags() {
   const searchParams = useSearchParams()
@@ -12,7 +11,7 @@ export default function Tags() {
 
   useEffect(() => {
     const tagParam = searchParams.get('tag')
-    if (tagParam && tags.includes(tagParam)) {
+    if (tagParam && TAGS.includes(tagParam)) {
       setSelectedTag(tagParam)
     } else {
       setSelectedTag('전체')
@@ -38,7 +37,9 @@ export default function Tags() {
       className="flex items-center w-full justify-start gap-2 pl-6 overflow-x-auto whitespace-nowrap"
       style={{ scrollbarWidth: 'none' }}
     >
-      {tags.map((tag) => (
+      <Tag tag="전체" isSelected={selectedTag === '전체'} handleTagClick={handleTagClick} />
+
+      {TAGS.map((tag) => (
         <Tag key={tag} tag={tag} isSelected={selectedTag === tag} handleTagClick={handleTagClick} />
       ))}
     </section>

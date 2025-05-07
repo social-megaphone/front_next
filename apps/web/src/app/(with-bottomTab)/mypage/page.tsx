@@ -2,8 +2,6 @@
 
 import { getMyProfile } from '@/apis'
 import TopGoBackBar from '@/components/layout/topBar/TopGobackBar'
-import PostCard from '@/components/ui/PostCard'
-import { PostCardSkeleton } from '@/components/ui/PostCard/Skeleton'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 

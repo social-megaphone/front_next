@@ -14,8 +14,6 @@ model User {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   profileImage String?
-  goal         String
-  goalDuration Int
   level        Int            @default(1)
   streak       Int            @default(0)
   
@@ -25,27 +23,48 @@ model User {
   likes        Like[]         // 사용자가 좋아요 한 항목
   bookmarks    Bookmark[]     // 사용자가 북마크한 항목
   comments     Comment[]      // 사용자가 작성한 댓글
-  
+  userRoutines UserRoutine[]  // 사용자가 선택한 루틴과 설정한 듀레이션
 }
 
-// 루틴 모델
 model Routine {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   userId        String
   title         String
-  desc          String?
+  desc          String
+  how           String
+  icon          String
+  color         String
   isRecommended Boolean       @default(false)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  tag           String        // 루틴에 연결된 태그 관계
+  tag           String
   isActive      Boolean       @default(true)
   
   // 관계 정의
   user          User          @relation(fields: [userId], references: [id])
   logs          RoutineLog[]
-  
+  userRoutines  UserRoutine[] // 이 루틴을 선택한 사용자들과 그들이 설정한 듀레이션
+
   @@index([userId])
   @@index([tag])
+}
+
+model UserRoutine {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  routineId   String   @db.ObjectId
+  duration    Int      // 사용자가 이 루틴에 설정한 수행 시간(분 단위)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+
+  // 관계 정의
+  user        User     @relation(fields: [userId], references: [id])
+  routine     Routine  @relation(fields: [routineId], references: [id])
+
+  @@unique([userId, routineId])
+  @@index([userId])
+  @@index([routineId])
 }
 
 // 루틴 수행 기록 모델
@@ -56,7 +75,7 @@ model RoutineLog {
 
   performedAt   DateTime       @default(now())
   reflection    String?
-  logImg        String?
+  logImg        String
   isPublic      Boolean        @default(true)
   
   // 관계 정의
@@ -122,15 +141,6 @@ model Bookmark {
   @@index([routineLogId])
 }
 
-// 태그 모델 추가
-model Tag {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  name          String         
-  description   String?
-  createdAt     DateTime       @default(now())
-  
-  @@index([name])
-}
 
 // 알림 모델 추가
 model Notification {
@@ -145,3 +155,5 @@ model Notification {
   @@index([isRead])
 }
 
+
+// 루틴, 태그 지우고, 루틴은 내가 만들 수 있게.

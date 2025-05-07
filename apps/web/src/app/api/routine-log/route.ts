@@ -47,6 +47,9 @@ export async function GET(request: NextRequest) {
             },
           },
         },
+        orderBy: {
+          performedAt: 'desc',
+        },
       })
     } else {
       routineLogs = await prisma.routineLog.findMany({
@@ -80,6 +83,9 @@ export async function GET(request: NextRequest) {
               userId: true,
             },
           },
+        },
+        orderBy: {
+          performedAt: 'desc',
         },
       })
     }

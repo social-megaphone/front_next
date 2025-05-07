@@ -1,14 +1,11 @@
 @import 'tailwindcss';
-@source "../../../apps/**/*.{ts,tsx}";
-@source "../../../components/**/*.{ts,tsx}";
-@source "../**/*.{ts,tsx}";
-
-@import 'tw-animate-css';
-
+@source "../../../../apps/web/src/**/*.{ts,tsx}";
+@source "../components/**/*.{ts,tsx}";
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --main-yellow: #fff2cd;
+  --haru-yellow: #fff7dc;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -81,7 +78,7 @@
 }
 
 @theme inline {
-  --color-background-yellow: #fff7dc;
+  --color-background-yellow: var(--haru-yellow);
   --color-haru-brown: #7a634b;
   --color-background: var(--background);
   --color-tab-brown: var(--bottom-tab-brown);
@@ -121,8 +118,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --shadow-haru: 0px 2px 2px 0px rgba(0, 0, 0, 0.25), 0px 2px 2px 0px rgba(0, 0, 0, 0.25) inset;
 }
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -132,7 +129,7 @@
     font-size: 14px;
   }
   @supports (-webkit-touch-callout: none) {
-    .frame{
+    .frame {
       height: -webkit-fill-available !important;
     }
   }

@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 import '@workspace/ui/globals.css'
 import { Providers } from '@/components/providers'
-import BottomTab from '@/components/layout/bottomTab/BottomTab'
 import { Metadata } from 'next'
 
 const fontSans = Geist({
@@ -15,18 +14,18 @@ const fontMono = Geist_Mono({
   variable: '--font-mono',
 })
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: '하루잇',
   description: '하루잇',
   viewport: {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
     userScalable: false,
+    maximumScale: 1,
+    minimumScale: 1,
+    viewportFit: 'cover',
   },
 }
-
-export { metadata }
 
 export default function RootLayout({
   children,
