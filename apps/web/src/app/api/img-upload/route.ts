@@ -1,5 +1,5 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 const Bucket = process.env.AWS_BUCKET_NAME || ''
 
@@ -10,7 +10,7 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
   },
 })
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest) {
   try {
     // 폼 데이터 처리
     const formData = await req.formData()
