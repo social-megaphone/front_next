@@ -35,7 +35,7 @@ export default function InitialPage() {
     <>
       {/* {isPending ? <h1 className="mt-12">임시 유저, 토큰 생성중입니다.</h1> : <h1>완료</h1>} */}
       <div className="w-full flex flex-col items-center justify-center -space-y-8">
-        <Image src="/images/haru.png" alt="initial" width={208} height={208} className="z-10" />
+        <Image src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
         <Card_Haru
           text={
             <p>
