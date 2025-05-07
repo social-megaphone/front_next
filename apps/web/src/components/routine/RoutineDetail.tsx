@@ -3,12 +3,12 @@ import { useToggleLike } from '@/hooks/query/useRoutineStatus'
 import { useToggleBookmark } from '@/hooks/query/useBookmarks'
 import { Button } from '@workspace/ui/components/button'
 import { HeartIcon, BookmarkIcon, MessageSquareIcon } from 'lucide-react'
-import Image from 'next/image'
 import { useRoutineLogDetail } from '@/hooks/query/useRoutineLogs'
 import { useRouter } from 'next/navigation'
 import { CommentSection } from './CommentSection'
 import { useComments } from '@/hooks/query/useComments'
 import { Skeleton } from '@workspace/ui/components/skeleton'
+import UnoptimizedImage from '../ image/UnoptimizedImage'
 
 function RoutineDetailPage({ id }: { id: string }) {
   const { mutate: toggleLike } = useToggleLike()
@@ -82,7 +82,7 @@ function RoutineDetailPage({ id }: { id: string }) {
   return (
     <div className="p-6 flex flex-col flex-1 overflow-y-auto h-full" style={{ scrollbarWidth: 'none' }}>
       <div className="flex items-center gap-2">
-        <Image
+        <UnoptimizedImage
           src={routineLogDetail.user.profileImage || '/default-user.avif'}
           alt={routineLogDetail.user.nickname}
           width={40}
@@ -94,7 +94,11 @@ function RoutineDetailPage({ id }: { id: string }) {
         </span>
       </div>
       <div className="relative shrink-0 mt-4 w-full aspect-video rounded-xl overflow-hidden">
-        <Image src={routineLogDetail?.logImg || '/noImg.png'} alt={routineLogDetail?.title || 'routine image'} fill />
+        <UnoptimizedImage
+          src={routineLogDetail?.logImg || '/noImg.png'}
+          alt={routineLogDetail?.title || 'routine image'}
+          fill
+        />
       </div>
       <div className="flex justify-between items-center mt-4">
         <div className="flex gap-1">

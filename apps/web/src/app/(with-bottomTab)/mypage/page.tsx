@@ -1,8 +1,8 @@
 'use client'
 
 import { getMyProfile } from '@/apis'
+import UnoptimizedImage from '@/components/ image/UnoptimizedImage'
 import TopGoBackBar from '@/components/layout/topBar/TopGobackBar'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 export default function MypagePage() {
@@ -27,7 +27,7 @@ export default function MypagePage() {
         <div className="w-full h-full bg-white overflow-hidden rounded-3xl">
           <div className="w-full pr-6 flex">
             <div className="w-20 h-20">
-              <Image src={myProfile.profileImage || '/default-user.avif'} width={80} height={80} alt="aa" />
+              <UnoptimizedImage src={myProfile.profileImage || '/default-user.avif'} width={80} height={80} alt="aa" />
             </div>
             <div className="flex-1 relative h-20 pl-2 pt-4">
               <p className="text-lg">{myProfile.nickname}</p>

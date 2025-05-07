@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { RoutineLogType } from '@/stores/useRoutineLogStore'
 import { motion } from 'framer-motion'
+import UnoptimizedImage from '@/components/ image/UnoptimizedImage'
 
 export function PostCard({ post }: { post: RoutineLogType }) {
   const router = useRouter()
@@ -60,7 +61,7 @@ function PostCardHeader({ nickname, tag }: { nickname: string; tag: string }) {
 function PostCardBody({ imgUrl, title }: { imgUrl: string; title: string }) {
   return (
     <div className="flex items-center w-full relative aspect-video rounded-xl overflow-hidden">
-      <Image src={imgUrl} alt={title} fill className="object-cover" />
+      <UnoptimizedImage src={imgUrl} alt={title} fill className="object-cover" />
     </div>
   )
 }

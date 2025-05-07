@@ -1,4 +1,5 @@
 'use client'
+import UnoptimizedImage from '@/components/ image/UnoptimizedImage'
 import Button_Haru from '@/components/ui/Haru/Button'
 import Card_Haru from '@/components/ui/Haru/Card'
 import { TAGS } from '@/constants'
@@ -32,7 +33,7 @@ export default function TagPage() {
   return (
     <>
       <div className="flex-1 w-full flex flex-col items-center justify-center -space-y-8">
-        <Image src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
+        <UnoptimizedImage src="/images/haru.png" alt="initial" width={180} height={180} className="z-10" />
         <Card_Haru
           text={
             <span className="font-bold">
