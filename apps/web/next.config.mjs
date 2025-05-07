@@ -2,6 +2,7 @@
 const nextConfig = {
   transpilePackages: ['@workspace/ui'],
   images: {
+    path: '/',
     remotePatterns: [
       {
         hostname: 'withus3bucket.s3.ap-northeast-2.amazonaws.com',
