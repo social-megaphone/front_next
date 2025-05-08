@@ -7,7 +7,7 @@ export default function InitialLayout({ children }: { children: React.ReactNode 
 
   return (
     <div
-      className="flex flex-col items-center justify-between h-screen px-10 pb-10 overflow-hidden"
+      className="flex flex-col items-center justify-between h-screen px-10 pb-4 overflow-hidden"
       style={{ backgroundImage: 'url(/haru_flower_pattern.png)' }}
     >
       <div className="absolute left-4 top-4 rounded-full p-3 bg-white flex items-center justify-center">
