@@ -70,7 +70,7 @@ export default function RoutineLogPage() {
         />
         <div className="w-full">
           {initialInfo.imgSrc ? (
-            <div className="bg-white shadow-haru w-full h-40 py-4 px-4 rounded-2xl text-lg relative">
+            <div className="bg-white shadow-haru w-full h-40 py-4 px-4 rounded-2xl text-lg relative overflow-hidden">
               <UnoptimizedImage src={initialInfo.imgSrc} alt="initial" fill className="object-cover" />
               <XIcon
                 className="absolute top-4 bg-white rounded-full p-1 right-4 w-8 h-8 text-gray-500"
