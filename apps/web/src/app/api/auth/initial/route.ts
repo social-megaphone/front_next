@@ -49,5 +49,10 @@ export async function POST(request: NextRequest) {
   })
 
   // 어디까지 반환해주는게 맞을까? goal이나 그런건 딱히 필요없을거 같기도 하고
-  return NextResponse.json({ message: 'success', nickname: user.nickname, profileImage: user.profileImage })
+  return NextResponse.json({
+    message: 'success',
+    JWT_TOKEN: JWT_TOKEN,
+    nickname: user.nickname,
+    profileImage: user.profileImage,
+  })
 }
