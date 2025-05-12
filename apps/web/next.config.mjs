@@ -9,6 +9,9 @@ const nextConfig = {
       {
         hostname: 'withus3bucket.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        hostname: 'socialmegaphone.s3.eu-north-1.amazonaws.com',
+      },
     ],
   },
 }

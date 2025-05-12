@@ -34,10 +34,11 @@ model Routine {
   how           String
   icon          String
   color         String
+  detailImg     String?
   isRecommended Boolean       @default(false)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  tag           String
+  tag           String[]
   isActive      Boolean       @default(true)
   
   // 관계 정의

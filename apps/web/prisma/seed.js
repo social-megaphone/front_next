@@ -60,9 +60,8 @@ async function main() {
       how: '깔끔하게 정돈한 사진을 찍고, 공유해요.',
       color: 'yellow',
       icon: '💧',
-
       isRecommended: true,
-      tag: '생활습관',
+      tag: ['생활습관'],
       isActive: true,
     },
     {
@@ -74,7 +73,7 @@ async function main() {
       how: '물을 마신 컵 또는 잔의 사진을 찍고, 상쾌한 기분에 대한 한 줄 소감을 적어요.',
       color: 'blue',
       isRecommended: true,
-      tag: '생활습관',
+      tag: ['생활습관'],
       isActive: true,
     },
     {
@@ -86,7 +85,7 @@ async function main() {
       how: '감사일기를 쓰고, 감사일기의 사진을 찍어 공유해요.',
       color: 'yellow',
       isRecommended: true,
-      tag: '감정돌봄',
+      tag: ['감정돌봄'],
       isActive: true,
     },
     {
@@ -98,7 +97,7 @@ async function main() {
       isRecommended: true,
       icon: '💧',
 
-      tag: '대인관계',
+      tag: ['대인관계'],
       isActive: true,
     },
     {
@@ -110,7 +109,7 @@ async function main() {
       how: '5분 스트레칭을 하고, 스트레칭한 몸의 사진을 찍어 공유해요.',
       color: 'gray',
       isRecommended: true,
-      tag: '작은 습관',
+      tag: ['작은 습관'],
       isActive: true,
     },
     {
@@ -120,9 +119,8 @@ async function main() {
       how: '명상을 10분 하고, 명상한 사진을 찍어 공유해요.',
       color: 'green',
       icon: '💧',
-
       isRecommended: true,
-      tag: '감정돌봄',
+      tag: ['감정돌봄'],
       isActive: true,
     },
   ]

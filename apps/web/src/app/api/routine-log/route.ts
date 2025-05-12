@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
               title: true,
               desc: true,
               tag: true,
+              detailImg: true,
             },
           },
           user: {
@@ -118,14 +119,34 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { routineId, logImg } = await request.json()
+  const { routineId, logImg, reflection } = await request.json()
 
   const cookieStore = await cookies()
-  const jwt_token = cookieStore.get('jwt_token')
+  let jwt_token = cookieStore.get('jwt_token')
 
+  // 이거 전체에 추가
+  if (!jwt_token) {
+    jwt_token.value = request.headers.get('Authorization')?.split(' ')[1]
+  }
   if (!jwt_token) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
   const userId = await getUserIdFromToken({ token: jwt_token.value })
+
+  try {
+    const routineLog = await prisma.routineLog.create({
+      data: {
+        routineId,
+        logImg,
+        reflection,
+        userId,
+      },
+    })
+
+    return NextResponse.json({ message: 'success', routineLog })
+  } catch (error) {
+    console.error('루틴생성중 에러:', error)
+    return NextResponse.json({ message: 'Failed to create routine log' }, { status: 500 })
+  }
 }
