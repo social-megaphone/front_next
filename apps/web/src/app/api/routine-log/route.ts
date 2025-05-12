@@ -56,7 +56,9 @@ export async function GET(request: NextRequest) {
       routineLogs = await prisma.routineLog.findMany({
         where: {
           routine: {
-            tag: tag,
+        tag: {
+          has: tag,
+        },
           },
         },
         include: {
