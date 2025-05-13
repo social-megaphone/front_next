@@ -7,7 +7,11 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
   const cookieStore = await cookies()
-  const jwt_token = cookieStore.get('jwt_token')
+  const jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
+
+  if (!jwt_token || !jwt_token.value) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+  }
   const userId = await getUserIdFromToken({ token: jwt_token?.value || '' })
   if (!id) {
     return NextResponse.json({ error: 'id is required' }, { status: 400 })

@@ -5,9 +5,9 @@ import { getUserIdFromToken } from '@/services/token.service'
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies()
-  const jwt_token = cookieStore.get('jwt_token')
+  const jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
 
-  if (!jwt_token) {
+  if (!jwt_token || !jwt_token.value) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
