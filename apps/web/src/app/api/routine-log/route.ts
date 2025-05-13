@@ -56,9 +56,9 @@ export async function GET(request: NextRequest) {
       routineLogs = await prisma.routineLog.findMany({
         where: {
           routine: {
-        tag: {
-          has: tag,
-        },
+            tag: {
+              has: tag,
+            },
           },
         },
         include: {
@@ -124,12 +124,8 @@ export async function POST(request: NextRequest) {
   const { routineId, logImg, reflection } = await request.json()
 
   const cookieStore = await cookies()
-  let jwt_token = cookieStore.get('jwt_token')
+  let jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
 
-  // 이거 전체에 추가
-  if (!jwt_token) {
-    jwt_token.value = request.headers.get('Authorization')?.split(' ')[1]
-  }
   if (!jwt_token) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
