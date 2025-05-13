@@ -31,4 +31,15 @@ export async function POST(request: NextRequest) {
   }
 
   const userId = await getUserIdFromToken({ token: jwt_token.value })
+
+  await prisma.routineLog.create({
+    data: {
+      userId,
+      routineId,
+      logImg,
+      reflection,
+    },
+  })
+
+  return NextResponse.json({ message: 'success' })
 }
