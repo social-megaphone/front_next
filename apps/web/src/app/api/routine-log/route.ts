@@ -124,9 +124,9 @@ export async function POST(request: NextRequest) {
   const { routineId, logImg, reflection } = await request.json()
 
   const cookieStore = await cookies()
-  let jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
+  const jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
 
-  if (!jwt_token) {
+  if (!jwt_token.value || !jwt_token) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
