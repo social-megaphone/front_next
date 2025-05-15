@@ -5,6 +5,8 @@ import { getUserIdFromToken } from '@/services/token.service'
 
 export async function GET(request: NextRequest) {
   const tag = request.nextUrl.searchParams.get('tag') || '전체'
+  const limit = parseInt(request.nextUrl.searchParams.get('limit') || '10')
+  const cursor = request.nextUrl.searchParams.get('cursor') // 마지막 항목의 ID
 
   const cookieStore = await cookies()
   const jwt_token = cookieStore.get('jwt_token') || { value: request.headers.get('Authorization')?.split(' ')[1] }
@@ -13,85 +15,66 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
-
   const userId = await getUserIdFromToken({ token: jwt_token.value })
 
-  let routineLogs = []
+  let whereCondition: any = {}
   const isAll = tag === '전체'
 
+  if (!isAll) {
+    whereCondition = {
+      routine: {
+        tag: {
+          has: tag,
+        },
+      },
+    }
+  }
+
   try {
-    if (isAll) {
-      routineLogs = await prisma.routineLog.findMany({
-        include: {
-          routine: {
-            select: {
-              title: true,
-              desc: true,
-              tag: true,
-              detailImg: true,
-            },
-          },
-          user: {
-            select: {
-              nickname: true,
-            },
-          },
-          likes: {
-            select: {
-              id: true,
-              userId: true,
-            },
-          },
-          bookmarks: {
-            select: {
-              id: true,
-              userId: true,
-            },
+    const routineLogs = await prisma.routineLog.findMany({
+      where: whereCondition,
+      include: {
+        routine: {
+          select: {
+            title: true,
+            desc: true,
+            tag: true,
+            detailImg: true,
           },
         },
-        orderBy: {
-          performedAt: 'desc',
-        },
-      })
-    } else {
-      routineLogs = await prisma.routineLog.findMany({
-        where: {
-          routine: {
-            tag: {
-              has: tag,
-            },
+        user: {
+          select: {
+            nickname: true,
           },
         },
-        include: {
-          routine: {
-            select: {
-              title: true,
-              desc: true,
-              tag: true,
-            },
-          },
-          user: {
-            select: {
-              nickname: true,
-            },
-          },
-          likes: {
-            select: {
-              id: true,
-              userId: true,
-            },
-          },
-          bookmarks: {
-            select: {
-              id: true,
-              userId: true,
-            },
+        likes: {
+          select: {
+            id: true,
+            userId: true,
           },
         },
-        orderBy: {
-          performedAt: 'desc',
+        bookmarks: {
+          select: {
+            id: true,
+            userId: true,
+          },
         },
-      })
+      },
+      orderBy: {
+        performedAt: 'desc',
+      },
+      take: limit + 1, // 다음 페이지 여부 확인을 위해 +1
+      ...(cursor && {
+        cursor: {
+          id: cursor,
+        },
+        skip: 1, // 커서 위치의 아이템은 제외
+      }),
+    })
+
+    const hasMore = routineLogs.length > limit
+    if (hasMore) {
+      routineLogs.pop() // 추가로 가져온 마지막 아이템 제거
     }
 
     const formattedRoutineLogs = routineLogs.map((routineLog) => {
@@ -114,7 +97,13 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    return NextResponse.json({ routineLogs: formattedRoutineLogs })
+    const nextCursor = hasMore ? routineLogs[routineLogs.length - 1]?.id : null
+
+    return NextResponse.json({
+      routineLogs: formattedRoutineLogs,
+      nextCursor,
+      hasMore,
+    })
   } catch (error) {
     console.error('Error fetching routines:', error)
     return NextResponse.json({ message: 'Failed to fetch routines' }, { status: 500 })
