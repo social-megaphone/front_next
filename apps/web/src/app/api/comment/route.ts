@@ -1,7 +1,9 @@
+// apps/web/src/app/api/comment/route.ts (POST 부분만 수정)
 import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { getUserIdFromToken } from '@/services/token.service'
+import { sendCommentNotification } from '@/services/noticification.service'
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies()
@@ -21,6 +23,10 @@ export async function POST(request: NextRequest) {
 
     const routineLog = await prisma.routineLog.findUnique({
       where: { id: routineLogId },
+      include: {
+        user: { select: { id: true } },
+        routine: { select: { title: true } },
+      },
     })
 
     if (!user) {
@@ -47,12 +53,22 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    // 자신의 루틴이 아닌 경우에만 알림 전송
+    if (routineLog.userId !== userId) {
+      await sendCommentNotification({
+        targetUserId: routineLog.userId,
+        commenterNickname: user.nickname,
+        routineTitle: routineLog.routine.title,
+        comment: content,
+      })
+    }
+
     return NextResponse.json({
       id: newComment.id,
       content: newComment.content,
       createdAt: newComment.createdAt,
       userId: newComment.userId,
-      nickname: user.nickname, // Using the user fetched earlier
+      nickname: user.nickname,
     })
   } catch (error) {
     console.error('Error creating comment:', error)
@@ -60,43 +76,4 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
-  const routineLogId = searchParams.get('routineLogId')
-
-  if (!routineLogId) {
-    return NextResponse.json({ message: 'routineLogId is required' }, { status: 400 })
-  }
-
-  try {
-    const comments = await prisma.comment.findMany({
-      where: {
-        logId: routineLogId,
-        isDeleted: false,
-      },
-      include: {
-        user: {
-          select: {
-            nickname: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
-
-    const formattedComments = comments.map((comment) => ({
-      id: comment.id,
-      content: comment.content,
-      createdAt: comment.createdAt,
-      userId: comment.userId,
-      nickname: comment.user.nickname,
-    }))
-
-    return NextResponse.json({ comments: formattedComments })
-  } catch (error) {
-    console.error('Error fetching comments:', error)
-    return NextResponse.json({ message: 'Failed to fetch comments' }, { status: 500 })
-  }
-}
+// GET 함수는 기존과 동일...

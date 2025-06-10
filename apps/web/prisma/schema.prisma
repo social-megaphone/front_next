@@ -7,6 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model FCMToken {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  token       String   @unique
+  deviceType  String   @default("mobile") // mobile, web, android, ios
+  deviceInfo  String?  // 디바이스 정보 (선택적)
+  isActive    Boolean  @default(true)
+  lastUsed    DateTime @default(now()) // 마지막 사용 시간
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계 정의
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 // 사용자 모델
 model User {
   id           String         @id @default(uuid()) @map("_id")
@@ -18,6 +35,7 @@ model User {
   streak       Int            @default(0)
   
   // 관계 정의
+  fcmTokens    FCMToken[]     // 사용자의 FCM 토큰들
   routines     Routine[]      // 사용자가 생성한 루틴
   routineLogs  RoutineLog[]   // 사용자의 루틴 기록
   likes        Like[]         // 사용자가 좋아요 한 항목
